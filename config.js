@@ -1,0 +1,1 @@
+window.JS_ADMIN_CONFIG={"supabaseUrl": "https://rfvicqueskvlpltzpoan.supabase.co", "supabasePublishableKey": "sb_publishable_OeATsZcNpLth9MVA72dkYQ_TEa9kDZ_"};

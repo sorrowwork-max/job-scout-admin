@@ -1,0 +1,42 @@
+/* Job Scout Admin: small additions on top of the extension's styles.css */
+.page.wide{max-width:1180px}
+.page.wide .app{gap:14px}
+.login-wrap{max-width:480px;width:100%;margin:26px auto 4px}
+#adminArea{display:flex;flex-direction:column;gap:14px}
+[hidden]{display:none!important}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.toolbar .chips{display:flex;gap:8px;flex-wrap:wrap;margin:0}
+.search-field{display:flex;align-items:center;gap:9px;padding:0 14px;min-width:260px;flex:1;max-width:360px;color:var(--label-3)}
+.search-field input{height:40px;padding-left:0}
+.chips .btn.is-on{background:color-mix(in srgb,var(--accent) 22%,transparent);color:var(--label);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent)}
+.admin-table{min-width:0;width:100%}
+.admin-table td{padding:12px 14px;vertical-align:middle}
+.admin-table td:first-child{font-weight:650;white-space:nowrap}
+.admin-table td.when{color:var(--label-2);font-size:12.5px;line-height:1.35}
+.pill{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--orange);background:color-mix(in srgb,var(--orange) 13%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--orange) 30%,transparent)}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.pill.approved,.pill.active{color:var(--green);background:color-mix(in srgb,var(--green) 13%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--green) 30%,transparent)}
+.pill.inactive{color:var(--label-2);background:var(--fill-2);box-shadow:inset 0 0 0 1px var(--hair)}
+.pill.rejected,.pill.suspended,.pill.revoked{color:var(--red);background:color-mix(in srgb,var(--red) 12%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--red) 30%,transparent)}
+.row-actions{display:flex;flex-wrap:wrap;gap:6px;min-width:190px;max-width:250px}
+.row-actions .btn{height:30px;padding:0 11px;font-size:11.5px;flex:none}
+.row-actions .btn-good{color:var(--green)}
+.row-actions .btn-danger{height:30px}
+@media(max-width:760px){.stats-4{grid-template-columns:1fr 1fr}.search-field{max-width:none}.page-head{flex-wrap:wrap}}
+
+.usage-hint{margin:-4px 6px 0}
+.cnt{opacity:.65;font-weight:600;margin-left:3px;font-variant-numeric:tabular-nums}
+.sort-field{min-width:190px}
+.sort-field select{height:40px;padding:0 12px;width:100%;background:transparent;border:0;color:var(--label);outline:none}
+.sort-field select option{color:#111}
+.who small{display:block;margin-top:2px;color:var(--label-3);font-weight:500;font-size:11.5px}
+.usage-cell{min-width:150px}
+.usage-cell b{font-variant-numeric:tabular-nums;font-size:15px;letter-spacing:-.01em}
+.usage-cell small{display:block;margin:1px 0 6px;color:var(--label-2);font-size:11.5px}
+.spark{display:flex;align-items:flex-end;gap:2px;height:20px}
+.spark i{flex:1;min-height:2px;border-radius:2px;background:var(--fill-ctl)}
+.spark i.on{background:linear-gradient(180deg,var(--accent-top),var(--accent-bot))}
+.spark i.today{box-shadow:0 0 0 1px var(--green)}
+.admin-table td.when{white-space:pre}
+.chart{height:178px}
+@media(max-width:900px){.dash-row{grid-template-columns:1fr}}
