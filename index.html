@@ -45,11 +45,14 @@
 <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2 5 6v5.6c0 4.3 2.8 7.6 7 9.2 4.2-1.6 7-4.9 7-9.2V6l-7-2.8Z"/><path d="m9 12 2.2 2.2L15.3 10"/></symbol>
 <symbol id="i-device" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="11.5" rx="2"/><path d="M8.5 20h7M12 16v4"/></symbol>
 <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 4.5h3.5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H14M10 8l-4 4 4 4M6 12h10"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
 <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="2.2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5M12 14.5v2"/></symbol></defs></svg>
   <div class="page wide"><main class="app">
     <header class="page-head glass glass-float">
       <div class="brand"><span class="logo-tile"><img src="icons/icon48.png" alt=""></span><div class="brand-copy"><h1>Admin</h1><p>Accounts, approvals and devices</p></div></div>
       <div class="header-actions">
+        <button id="menuBtn" class="btn btn-secondary btn-sm menu-btn" type="button" hidden aria-label="Open menu" aria-expanded="false" style="flex:none"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg><span>Menu</span></button>
+        <div class="field gsearch" id="gsWrap" hidden><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input id="gSearch" type="search" placeholder="Search users by email…" aria-label="Search users"></div>
         <button id="themeToggle" class="theme-switch" type="button" role="switch" aria-checked="true" aria-label="Dark mode" title="Switch theme"><span class="ts-knob"><span class="ts-icon ts-sun"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg></span><span class="ts-icon ts-moon"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg></span></span></button>
         <button id="refresh" class="btn btn-secondary btn-sm" type="button" hidden style="flex:none"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-refresh"/></svg>Refresh</button>
         <button id="signOut" class="btn btn-secondary btn-sm" type="button" hidden style="flex:none"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-logout"/></svg>Sign out</button>
@@ -68,28 +71,26 @@
     </section>
 
     <div id="adminArea" hidden>
-      <nav class="tabs glass" id="tabs" role="tablist" aria-label="Admin sections">
-        <button class="tab is-on" type="button" role="tab" data-tab="overview"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg><span>Overview</span></button>
-        <button class="tab" type="button" role="tab" data-tab="activity"><svg class="i" aria-hidden="true"><use href="#i-bolt"/></svg><span>Activity</span></button>
-        <button class="tab" type="button" role="tab" data-tab="users"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg><span>Users</span></button>
-        <button class="tab" type="button" role="tab" data-tab="logs"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg><span>Admin logs</span></button>
-        <button class="tab" type="button" role="tab" data-tab="ext"><svg class="i" aria-hidden="true"><use href="#i-scan"/></svg><span>Extension</span></button>
-        <div class="seg-range" id="rangeSeg" role="group" aria-label="Date range"><button class="btn btn-secondary btn-sm" data-r="7" type="button">7d</button><button class="btn btn-secondary btn-sm" data-r="30" type="button">30d</button><button class="btn btn-secondary btn-sm" data-r="90" type="button">90d</button></div>
-      </nav>
+      <div id="sideBack" class="side-back" hidden></div>
+      <aside class="side glass" id="tabs" role="tablist" aria-label="Admin sections"><p class="side-h">Dashboard</p><button class="tab is-on" type="button" role="tab" data-tab="overview"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg><span>Overview</span></button><button class="tab" type="button" role="tab" data-tab="activity"><svg class="i" aria-hidden="true"><use href="#i-bolt"/></svg><span>Activity</span></button><button class="tab" type="button" role="tab" data-tab="users"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg><span>Users</span></button><p class="side-h">System</p><button class="tab" type="button" role="tab" data-tab="logs"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg><span>Admin logs</span></button><button class="tab" type="button" role="tab" data-tab="ext"><svg class="i" aria-hidden="true"><use href="#i-scan"/></svg><span>Extension</span></button></aside>
+      <div class="content">
+      <div class="pagebar glass"><h2 id="crumbTitle">Overview</h2><div class="crumb">Home <i>›</i> Dashboard <i>›</i> <b id="crumbLeaf">Overview</b></div><div class="seg-range" id="rangeSeg" role="group" aria-label="Date range"><button class="btn btn-secondary btn-sm" data-r="7" type="button">7d</button><button class="btn btn-secondary btn-sm" data-r="30" type="button">30d</button><button class="btn btn-secondary btn-sm" data-r="90" type="button">90d</button></div></div>
 
       <section class="pane" id="pane-overview">
         <div class="stats-4">
-          <div class="stat glass" data-tone="blue"><div class="stat-head"><i class="stat-dot"></i>Total users</div><strong id="sTotal">0</strong><p class="stat-sub" id="sTotalSub"></p></div>
-          <div class="stat glass" data-tone="green"><div class="stat-head"><i class="stat-dot"></i>Approved users</div><strong id="sApproved">0</strong><p class="stat-sub" id="sApprovedSub"></p></div>
-          <div class="stat glass" data-tone="orange"><div class="stat-head"><i class="stat-dot"></i>Active users</div><strong id="sActive">0</strong><p class="stat-sub" id="sActiveSub"></p></div>
-          <div class="stat glass" data-tone="violet"><div class="stat-head"><i class="stat-dot"></i>Inactive users</div><strong id="sInactive">0</strong><p class="stat-sub" id="sInactiveSub"></p></div>
+          <div class="stat glass" data-tone="blue"><div class="stat-head"><i class="stat-dot"></i>Total users</div><svg class="i stat-ico" aria-hidden="true"><use href="#i-users"/></svg><strong id="sTotal">0</strong><p class="stat-sub" id="sTotalSub"></p></div>
+          <div class="stat glass" data-tone="green"><div class="stat-head"><i class="stat-dot"></i>Approved users</div><svg class="i stat-ico" aria-hidden="true"><use href="#i-shield"/></svg><strong id="sApproved">0</strong><p class="stat-sub" id="sApprovedSub"></p></div>
+          <div class="stat glass" data-tone="orange"><div class="stat-head"><i class="stat-dot"></i>Active users</div><svg class="i stat-ico" aria-hidden="true"><use href="#i-bolt"/></svg><strong id="sActive">0</strong><p class="stat-sub" id="sActiveSub"></p></div>
+          <div class="stat glass" data-tone="violet"><div class="stat-head"><i class="stat-dot"></i>Inactive users</div><svg class="i stat-ico" aria-hidden="true"><use href="#i-clock"/></svg><strong id="sInactive">0</strong><p class="stat-sub" id="sInactiveSub"></p></div>
         </div>
-        <div class="grid-3">
-          <div class="card glass compact"><div class="card-head"><div><h3 class="card-title">Daily</h3><p>Authorization checks per day</p></div></div><div id="chD" class="chart mini"></div></div>
-          <div class="card glass compact"><div class="card-head"><div><h3 class="card-title">Weekly</h3><p>Checks per week (UTC, Mon start)</p></div></div><div id="chW" class="chart mini"></div></div>
-          <div class="card glass compact"><div class="card-head"><div><h3 class="card-title">Monthly</h3><p>Checks per month (UTC)</p></div></div><div id="chM" class="chart mini"></div></div>
+        <div class="dash-row">
+          <div class="card glass compact"><div class="card-head"><div><h3 class="card-title">Daily activity</h3><p>Authorization checks per day</p></div></div><div id="chD" class="linechart" role="img" aria-label="Daily authorization checks"></div></div>
+          <div class="card glass compact"><div class="card-head"><div><h3 class="card-title">Checks by user</h3><p class="rangeLbl"></p></div></div><div id="chU" class="chart mini tall"></div></div>
         </div>
-        <div class="dash-row dash-row-even">
+        <div class="grid-4">
+          <div class="card glass compact"><div class="card-head"><div><h3 class="card-title">Weekly</h3><p>Per week (UTC)</p></div></div><div id="chW" class="chart mini"></div></div>
+          <div class="card glass compact"><div class="card-head"><div><h3 class="card-title">Monthly</h3><p>Per month (UTC)</p></div></div><div id="chM" class="chart mini"></div></div>
+          
           <div class="card glass compact"><div class="card-head"><span class="chip-icon green" aria-hidden="true"><svg class="i"><use href="#i-bolt"/></svg></span><div><h3 class="card-title">Most active</h3><p class="rangeLbl"></p></div></div><div id="topMost"></div></div>
           <div class="card glass compact"><div class="card-head"><span class="chip-icon orange" aria-hidden="true"><svg class="i"><use href="#i-clock"/></svg></span><div><h3 class="card-title">Least active</h3><p class="rangeLbl">Approved users</p></div></div><div id="topLeast"></div></div>
         </div>
@@ -144,6 +145,7 @@
           <div class="ext-grid" id="extGrid"></div>
         </div>
       </section>
+      </div>
     </div>
 
     <div id="modal" class="modal" hidden><div class="modal-card glass glass-hi" role="dialog" aria-modal="true" aria-labelledby="mTitle"><div class="modal-head"><h3 class="card-title" id="mTitle"></h3><button id="mClose" class="btn btn-secondary btn-sm" type="button" aria-label="Close">Close</button></div><div id="mBody" class="modal-body"></div><div id="mFoot" class="modal-foot"></div></div></div>
