@@ -68,40 +68,85 @@
     </section>
 
     <div id="adminArea" hidden>
-      <section class="stats-4">
-        <div class="stat glass" data-tone="blue"><div class="stat-head"><i class="stat-dot"></i>Total accounts</div><strong id="sTotal">0</strong><p class="stat-sub" id="sTotalSub">Registered users</p></div>
-        <div class="stat glass" data-tone="green"><div class="stat-head"><i class="stat-dot"></i>Active today</div><strong id="sToday">0</strong><p class="stat-sub" id="sTodaySub">Used the extension today</p></div>
-        <div class="stat glass" data-tone="orange"><div class="stat-head"><i class="stat-dot"></i>Active this week</div><strong id="sWeek">0</strong><p class="stat-sub" id="sWeekSub">Last 7 days</p></div>
-        <div class="stat glass" data-tone="violet"><div class="stat-head"><i class="stat-dot"></i>Checks today</div><strong id="sChecks">0</strong><p class="stat-sub">Popup opens and uploads</p></div>
+      <nav class="tabs glass" id="tabs" role="tablist" aria-label="Admin sections">
+        <button class="tab is-on" type="button" role="tab" data-tab="overview"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg><span>Overview</span></button>
+        <button class="tab" type="button" role="tab" data-tab="activity"><svg class="i" aria-hidden="true"><use href="#i-bolt"/></svg><span>Activity</span></button>
+        <button class="tab" type="button" role="tab" data-tab="users"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg><span>Users</span></button>
+        <button class="tab" type="button" role="tab" data-tab="logs"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg><span>Admin logs</span></button>
+        <button class="tab" type="button" role="tab" data-tab="ext"><svg class="i" aria-hidden="true"><use href="#i-scan"/></svg><span>Extension</span></button>
+        <div class="seg-range" id="rangeSeg" role="group" aria-label="Date range"><button class="btn btn-secondary btn-sm" data-r="7" type="button">7d</button><button class="btn btn-secondary btn-sm" data-r="30" type="button">30d</button><button class="btn btn-secondary btn-sm" data-r="90" type="button">90d</button></div>
+      </nav>
+
+      <section class="pane" id="pane-overview">
+        <div class="stats-4">
+          <div class="stat glass" data-tone="blue"><div class="stat-head"><i class="stat-dot"></i>Total users</div><strong id="sTotal">0</strong><p class="stat-sub" id="sTotalSub"></p></div>
+          <div class="stat glass" data-tone="green"><div class="stat-head"><i class="stat-dot"></i>Approved users</div><strong id="sApproved">0</strong><p class="stat-sub" id="sApprovedSub"></p></div>
+          <div class="stat glass" data-tone="orange"><div class="stat-head"><i class="stat-dot"></i>Active users</div><strong id="sActive">0</strong><p class="stat-sub" id="sActiveSub"></p></div>
+          <div class="stat glass" data-tone="violet"><div class="stat-head"><i class="stat-dot"></i>Inactive users</div><strong id="sInactive">0</strong><p class="stat-sub" id="sInactiveSub"></p></div>
+        </div>
+        <div class="grid-3">
+          <div class="card glass compact"><div class="card-head"><div><h3 class="card-title">Daily</h3><p>Authorization checks per day</p></div></div><div id="chD" class="chart mini"></div></div>
+          <div class="card glass compact"><div class="card-head"><div><h3 class="card-title">Weekly</h3><p>Checks per week (UTC, Mon start)</p></div></div><div id="chW" class="chart mini"></div></div>
+          <div class="card glass compact"><div class="card-head"><div><h3 class="card-title">Monthly</h3><p>Checks per month (UTC)</p></div></div><div id="chM" class="chart mini"></div></div>
+        </div>
+        <div class="dash-row dash-row-even">
+          <div class="card glass compact"><div class="card-head"><span class="chip-icon green" aria-hidden="true"><svg class="i"><use href="#i-bolt"/></svg></span><div><h3 class="card-title">Most active</h3><p class="rangeLbl"></p></div></div><div id="topMost"></div></div>
+          <div class="card glass compact"><div class="card-head"><span class="chip-icon orange" aria-hidden="true"><svg class="i"><use href="#i-clock"/></svg></span><div><h3 class="card-title">Least active</h3><p class="rangeLbl">Approved users</p></div></div><div id="topLeast"></div></div>
+        </div>
+        <p class="hint">Counts are authorization checks (the extension opening or confirming access), not completed scans. Days use UTC.</p>
       </section>
 
-      <section class="dash-row">
-        <div class="card glass">
-          <div class="card-head"><span class="chip-icon" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-chart"/></svg></span><div><h3 class="card-title">Extension usage</h3><p>Total checks per day, last 14 days</p></div></div>
-          <div id="chart" class="chart" role="img" aria-label="Extension checks per day for the last 14 days"></div>
+      <section class="pane" id="pane-activity" hidden>
+        <div class="stats-4">
+          <div class="stat glass" data-tone="blue"><div class="stat-head"><i class="stat-dot"></i>Total checks</div><strong id="aTotal">0</strong><p class="stat-sub rangeLbl"></p></div>
+          <div class="stat glass" data-tone="green"><div class="stat-head"><i class="stat-dot"></i>Today</div><strong id="aDay">0</strong><p class="stat-sub">Authorization checks</p></div>
+          <div class="stat glass" data-tone="orange"><div class="stat-head"><i class="stat-dot"></i>Last 7 days</div><strong id="aWeek">0</strong><p class="stat-sub">Authorization checks</p></div>
+          <div class="stat glass" data-tone="violet"><div class="stat-head"><i class="stat-dot"></i>Last 30 days</div><strong id="aMonth">0</strong><p class="stat-sub" id="aLast">Last activity: never</p></div>
         </div>
-        <div class="card glass">
-          <div class="card-head"><span class="chip-icon green" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-bolt"/></svg></span><div><h3 class="card-title">Most active</h3><p>Checks in the last 7 days</p></div></div>
-          <div id="top"></div>
-        </div>
-      </section>
-      <p id="usageHint" class="hint usage-hint">A check is counted when a user opens the extension or uploads scan results. More checks means more use. Days use UTC.</p>
-
-      <section class="card glass">
-        <div class="card-head"><span class="chip-icon violet" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span><div><h3 class="card-title">Registered accounts</h3><p>Approve users and control their active device registration.</p></div></div>
-        <div class="toolbar">
-          <div class="field search-field"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-search"/></svg><input id="filter" type="search" placeholder="Search by email" aria-label="Search accounts"></div>
-          <div class="field sort-field"><select id="sort" aria-label="Sort accounts"><option value="new">Newest first</option><option value="usage">Most active (7 days)</option><option value="seen">Recently seen</option></select></div>
-          <div class="chips" id="chips">
-            <button class="btn btn-secondary btn-sm is-on" type="button" data-f="all">All <span class="cnt" id="cAll"></span></button>
-            <button class="btn btn-secondary btn-sm" type="button" data-f="pending">Pending <span class="cnt" id="cPending"></span></button>
-            <button class="btn btn-secondary btn-sm" type="button" data-f="approved">Approved <span class="cnt" id="cApproved"></span></button>
-            <button class="btn btn-secondary btn-sm" type="button" data-f="blocked">Blocked <span class="cnt" id="cBlocked"></span></button>
+        <div class="card glass compact">
+          <div class="toolbar tight">
+            <div class="field search-field"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input id="aSearch" type="search" placeholder="Search by email" aria-label="Search activity by email"></div>
+            <label class="date-f">From <span class="field"><input id="aFrom" type="date"></span></label>
+            <label class="date-f">To <span class="field"><input id="aTo" type="date"></span></label>
+            <button id="aClear" class="btn btn-secondary btn-sm" type="button">Reset</button>
           </div>
+          <div class="table-wrap scroll-y"><table class="report-table admin-table"><thead><tr><th>User</th><th>Checks</th><th>Active days</th><th>Last activity</th><th>Trend</th></tr></thead><tbody id="aRows"></tbody></table><div id="aEmpty" class="table-empty" hidden>No matching activity.</div></div>
+          <p class="hint">Authorization checks only. They show how often a user's extension asked for access, not how many scans finished.</p>
         </div>
-        <div class="table-wrap"><table class="report-table admin-table"><thead><tr><th>Account</th><th>Approval</th><th>Device</th><th>Usage</th><th>Last seen</th><th>Actions</th></tr></thead><tbody id="users"></tbody></table><div id="empty" class="table-empty" hidden>No accounts to display.</div></div>
+      </section>
+
+      <section class="pane" id="pane-users" hidden>
+        <div class="card glass compact">
+          <div class="toolbar tight">
+            <div class="field search-field"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input id="filter" type="search" placeholder="Search by email" aria-label="Search accounts"></div>
+            <div class="field sort-field"><select id="sort" aria-label="Sort accounts"><option value="new">Newest first</option><option value="usage">Most active (7 days)</option><option value="seen">Recently seen</option></select></div>
+            <div class="chips" id="chips">
+              <button class="btn btn-secondary btn-sm is-on" type="button" data-f="all">All <span class="cnt" id="cAll"></span></button>
+              <button class="btn btn-secondary btn-sm" type="button" data-f="pending">Pending <span class="cnt" id="cPending"></span></button>
+              <button class="btn btn-secondary btn-sm" type="button" data-f="approved">Approved <span class="cnt" id="cApproved"></span></button>
+              <button class="btn btn-secondary btn-sm" type="button" data-f="blocked">Blocked <span class="cnt" id="cBlocked"></span></button>
+            </div>
+          </div>
+          <div class="table-wrap scroll-y"><table class="report-table admin-table"><thead><tr><th>Account</th><th>Approval</th><th>Device</th><th>Usage</th><th>Last seen</th><th>Actions</th></tr></thead><tbody id="users"></tbody></table><div id="empty" class="table-empty" hidden>No accounts to display.</div></div>
+        </div>
+      </section>
+
+      <section class="pane" id="pane-logs" hidden>
+        <div class="card glass compact">
+          <div class="card-head"><span class="chip-icon violet" aria-hidden="true"><svg class="i"><use href="#i-list"/></svg></span><div><h3 class="card-title">Admin logs</h3><p>Administrative actions, newest first. Passwords are never recorded.</p></div></div>
+          <div class="table-wrap scroll-y"><table class="report-table admin-table"><thead><tr><th>Action</th><th>Affected user</th><th>Date and time</th><th>Result</th></tr></thead><tbody id="logRows"></tbody></table><div id="logEmpty" class="table-empty" hidden>No admin actions recorded yet.</div></div>
+        </div>
+      </section>
+
+      <section class="pane" id="pane-ext" hidden>
+        <div class="card glass compact">
+          <div class="card-head"><span class="chip-icon" aria-hidden="true"><svg class="i"><use href="#i-scan"/></svg></span><div><h3 class="card-title">Job Scout extension analytics</h3><p>Not available yet. These need extra reporting from the extension, so no values are shown.</p></div></div>
+          <div class="ext-grid" id="extGrid"></div>
+        </div>
       </section>
     </div>
+
+    <div id="modal" class="modal" hidden><div class="modal-card glass glass-hi" role="dialog" aria-modal="true" aria-labelledby="mTitle"><div class="modal-head"><h3 class="card-title" id="mTitle"></h3><button id="mClose" class="btn btn-secondary btn-sm" type="button" aria-label="Close">Close</button></div><div id="mBody" class="modal-body"></div><div id="mFoot" class="modal-foot"></div></div></div>
 
     <p id="msg" class="status" role="status" aria-live="polite">Sign in with the owner account to continue.</p>
     <footer><span class="credit">Job Scout private administration</span></footer>
