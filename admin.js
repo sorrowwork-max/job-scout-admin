@@ -135,6 +135,18 @@ function renderRows(){
     if(s!=='approved')w.append(set(s==='pending'?'Approve':'Reactivate','approved','btn-secondary btn-good'));
     if(s==='pending')w.append(set('Reject','rejected','btn-danger'));
     if(s==='approved')w.append(set('Suspend','suspended','btn-danger'));
+    w.append(btn('Set password','btn-secondary',async b=>{
+      const password=window.prompt('Enter a new password for '+(p.email||'this user')+'. Use at least 8 characters.');
+      if(password===null)return;
+      if(password.length<8){msg('Password must contain at least 8 characters.');return;}
+      const confirmPassword=window.prompt('Confirm the new password.');
+      if(confirmPassword===null)return;
+      if(password!==confirmPassword){msg('Passwords do not match.');return;}
+      b.disabled=true;const old=b.textContent;b.textContent='Updating…';
+      try{await call({action:'set_password',user_id:p.user_id,password});msg('Password updated for '+(p.email||'the selected user')+'.');}
+      catch(e){msg(e.message);}
+      finally{b.disabled=false;b.textContent=old;}
+    }));
     w.append(btn('Reset device','btn-secondary',b=>runAction(b,{user_id:p.user_id,status:p.approval_status,release_device:true})));
     w.append(btn('Revoke device','btn-danger',b=>runAction(b,{user_id:p.user_id,status:p.approval_status,revoke_device:true})));
     act.append(w);tr.append(act);body.append(tr);
